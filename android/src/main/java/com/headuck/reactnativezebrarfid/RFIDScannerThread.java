@@ -214,7 +214,9 @@ public abstract class RFIDScannerThread extends Thread implements RfidEventsList
 
     public void onHostResume() {
         if (readers != null){
-            this.connect();
+            connectAsync connAsync = new connectAsync();
+            connAsync.executeOnExecutor(SERIAL_EXECUTOR,this.rfidReaderDevice, this.readers);
+            // this.connect();
         } else {
              Log.e("RFID", "Can't resume - reader is null");
         }
